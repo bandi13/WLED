@@ -351,7 +351,7 @@ void Segment::blurCol(uint16_t col, fract8 blur_amount) {
 }
 
 // 1D Box blur (with added weight - blur_amount: [0=no blur, 255=max blur])
-void Segment::box_blur(uint16_t i, bool vertical, fract8 blur_amount) {
+void Segment::boxBlur(uint16_t i, bool vertical, fract8 blur_amount) {
   if (!isActive() || blur_amount == 0) return; // not active
   const uint16_t cols = virtualWidth();
   const uint16_t rows = virtualHeight();
@@ -458,7 +458,7 @@ void Segment::move(uint8_t dir, uint8_t delta, bool wrap) {
   }
 }
 
-void Segment::draw_circle(uint16_t cx, uint16_t cy, uint8_t radius, CRGB col) {
+void Segment::drawCircle(uint16_t cx, uint16_t cy, uint8_t radius, CRGB col) {
   if (!isActive() || radius == 0) return; // not active
   // Bresenham’s Algorithm
   int d = 3 - (2*radius);
@@ -482,7 +482,7 @@ void Segment::draw_circle(uint16_t cx, uint16_t cy, uint8_t radius, CRGB col) {
   }
 }
 
-void Segment::draw_circle_antialiased(uint16_t cx, uint16_t cy, uint8_t radius, CRGB col) {
+void Segment::drawCircleAntialiased(uint16_t cx, uint16_t cy, uint8_t radius, CRGB col) {
   if (!isActive() || radius == 0) return; // not active
   const uint16_t cols = virtualWidth();
   const uint16_t rows = virtualHeight();
@@ -509,7 +509,7 @@ void Segment::draw_circle_antialiased(uint16_t cx, uint16_t cy, uint8_t radius, 
 }
 
 // by stepko, taken from https://editor.soulmatelights.com/gallery/573-blobs
-void Segment::fill_circle(uint16_t cx, uint16_t cy, uint8_t radius, CRGB col) {
+void Segment::fillCircle(uint16_t cx, uint16_t cy, uint8_t radius, CRGB col) {
   if (!isActive() || radius == 0) return; // not active
   const uint16_t cols = virtualWidth();
   const uint16_t rows = virtualHeight();
@@ -626,7 +626,7 @@ void Segment::drawCharacter(unsigned char chr, int16_t x, int16_t y, uint8_t w, 
 }
 
 #define WU_WEIGHT(a,b) ((uint8_t) (((a)*(b)+(a)+(b))>>8))
-void Segment::wu_pixel(uint32_t x, uint32_t y, CRGB c) {      //awesome wu_pixel procedure by reddit u/sutaburosu
+void Segment::wuPixel(uint32_t x, uint32_t y, CRGB c) {      //awesome wu_pixel procedure by reddit u/sutaburosu
   if (!isActive()) return; // not active
   // extract the fractional parts and derive their inverses
   uint8_t xx = x & 0xff, yy = y & 0xff, ix = 255 - xx, iy = 255 - yy;

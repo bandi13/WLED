@@ -2421,7 +2421,7 @@ uint16_t ripple_base()
         uint16_t cx = rippleorigin >> 8;
         uint16_t cy = rippleorigin & 0xFF;
         uint8_t mag = scale8(sin8((propF>>2)), amp);
-        if (propI > 0) SEGMENT.draw_circle(cx, cy, propI, color_blend(SEGMENT.getPixelColorXY(cx + propI, cy), col, mag));
+        if (propI > 0) SEGMENT.drawCircle(cx, cy, propI, color_blend(SEGMENT.getPixelColorXY(cx + propI, cy), col, mag));
       } else
       #endif
       {
@@ -4706,7 +4706,7 @@ uint16_t mode_2DAnalogClock(void) {                  // By Andras Fekete (bandi1
   uint16_t second_y = centerY + second_len * sin_t(second_angle);
 
   SEGMENT.fill(BLACK);
-  SEGMENT.draw_circle_antialiased(centerX, centerY, radius, DARKSLATEGRAY);
+  SEGMENT.drawCircleAntialiased(centerX, centerY, radius, DARKSLATEGRAY);
   SEGMENT.drawLineAntialiased(centerX, centerY, second_x, second_y, BLUE);
   SEGMENT.drawLineAntialiased(centerX, centerY, minute_x, minute_y, GREEN);
   SEGMENT.drawLineAntialiased(centerX, centerY, hour_x, hour_y, RED);
@@ -5813,7 +5813,7 @@ uint16_t mode_2Dghostrider(void) {
     SEGMENT.fadeToBlackBy((SEGMENT.speed>>2)+64);
 
     CRGB color = CRGB::White;
-    SEGMENT.wu_pixel(lighter->gPosX * 256 / 10, lighter->gPosY * 256 / 10, color);
+    SEGMENT.wuPixel(lighter->gPosX * 256 / 10, lighter->gPosY * 256 / 10, color);
 
     lighter->gPosX += lighter->Vspeed * sin_t(radians(lighter->gAngle));
     lighter->gPosY += lighter->Vspeed * cos_t(radians(lighter->gAngle));
@@ -5841,7 +5841,7 @@ uint16_t mode_2Dghostrider(void) {
         lighter->lightersPosX[i] += -7 * sin_t(radians(lighter->Angle[i]));
         lighter->lightersPosY[i] += -7 * cos_t(radians(lighter->Angle[i]));
       }
-      SEGMENT.wu_pixel(lighter->lightersPosX[i] * 256 / 10, lighter->lightersPosY[i] * 256 / 10, ColorFromPalette(SEGPALETTE, (256 - lighter->time[i])));
+      SEGMENT.wuPixel(lighter->lightersPosX[i] * 256 / 10, lighter->lightersPosY[i] * 256 / 10, ColorFromPalette(SEGPALETTE, (256 - lighter->time[i])));
     }
     SEGMENT.blur(SEGMENT.intensity>>3);
   }
@@ -5912,7 +5912,7 @@ uint16_t mode_2Dfloatingblobs(void) {
       }
     }
     uint32_t c = SEGMENT.color_from_palette(blob->color[i], false, false, 0);
-    if (blob->r[i] > 1.f) SEGMENT.fill_circle(blob->x[i], blob->y[i], roundf(blob->r[i]), c);
+    if (blob->r[i] > 1.f) SEGMENT.fillCircle(blob->x[i], blob->y[i], roundf(blob->r[i]), c);
     else                  SEGMENT.setPixelColorXY(blob->x[i], blob->y[i], c);
     // move x
     if (blob->x[i] + blob->r[i] >= cols - 1) blob->x[i] += (blob->sX[i] * ((cols - 1 - blob->x[i]) / blob->r[i] + 0.005f));
@@ -6070,7 +6070,7 @@ uint16_t mode_2Ddriftrose(void) {
   for (size_t i = 1; i < 37; i++) {
     uint32_t x = (CX + (sin_t(radians(i * 10)) * (beatsin8(i, 0, L*2)-L))) * 255.f;
     uint32_t y = (CY + (cos_t(radians(i * 10)) * (beatsin8(i, 0, L*2)-L))) * 255.f;
-    SEGMENT.wu_pixel(x, y, CHSV(i * 10, 255, 255));
+    SEGMENT.wuPixel(x, y, CHSV(i * 10, 255, 255));
   }
   SEGMENT.blur((SEGMENT.intensity>>4)+1);
 

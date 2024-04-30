@@ -615,25 +615,25 @@ typedef struct Segment {
     void addPixelColorXY(int x, int y, byte r, byte g, byte b, byte w = 0, bool fast = false) { addPixelColorXY(x, y, RGBW32(r,g,b,w), fast); } // automatically inline
     void addPixelColorXY(int x, int y, CRGB c, bool fast = false)                             { addPixelColorXY(x, y, RGBW32(c.r,c.g,c.b,0), fast); }
     void fadePixelColorXY(uint16_t x, uint16_t y, uint8_t fade);
-    void box_blur(uint16_t i, bool vertical, fract8 blur_amount); // 1D box blur (with weight)
+    void boxBlur(uint16_t i, bool vertical, fract8 blur_amount); // 1D box blur (with weight)
     void blurRow(uint16_t row, fract8 blur_amount);
     void blurCol(uint16_t col, fract8 blur_amount);
     void moveX(int8_t delta, bool wrap = false);
     void moveY(int8_t delta, bool wrap = false);
     void move(uint8_t dir, uint8_t delta, bool wrap = false);
-    void draw_circle(uint16_t cx, uint16_t cy, uint8_t radius, CRGB c);
-    void draw_circle_antialiased(uint16_t cx, uint16_t cy, uint8_t radius, CRGB c);
-    void fill_circle(uint16_t cx, uint16_t cy, uint8_t radius, CRGB c);
+    void drawCircle(uint16_t cx, uint16_t cy, uint8_t radius, CRGB c);
+    void drawCircleAntialiased(uint16_t cx, uint16_t cy, uint8_t radius, CRGB c);
+    void fillCircle(uint16_t cx, uint16_t cy, uint8_t radius, CRGB c);
     void drawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint32_t c);
     void drawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, CRGB c) { drawLine(x0, y0, x1, y1, RGBW32(c.r,c.g,c.b,0)); } // automatic inline
     void drawLineAntialiased(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint32_t c);
     void drawCharacter(unsigned char chr, int16_t x, int16_t y, uint8_t w, uint8_t h, uint32_t color, uint32_t col2 = 0, int8_t rotate = 0);
     void drawCharacter(unsigned char chr, int16_t x, int16_t y, uint8_t w, uint8_t h, CRGB c) { drawCharacter(chr, x, y, w, h, RGBW32(c.r,c.g,c.b,0)); } // automatic inline
     void drawCharacter(unsigned char chr, int16_t x, int16_t y, uint8_t w, uint8_t h, CRGB c, CRGB c2, int8_t rotate = 0) { drawCharacter(chr, x, y, w, h, RGBW32(c.r,c.g,c.b,0), RGBW32(c2.r,c2.g,c2.b,0), rotate); } // automatic inline
-    void wu_pixel(uint32_t x, uint32_t y, CRGB c);
+    void wuPixel(uint32_t x, uint32_t y, CRGB c);
     void blur1d(fract8 blur_amount); // blur all rows in 1 dimension
     void blur2d(fract8 blur_amount) { blur(blur_amount); }
-    void fill_solid(CRGB c) { fill(RGBW32(c.r,c.g,c.b,0)); }
+    void fillSolid(CRGB c) { fill(RGBW32(c.r,c.g,c.b,0)); }
     void nscale8(uint8_t scale);
   #else
     uint16_t XY(uint16_t x, uint16_t y)                                    { return x; }
@@ -650,19 +650,19 @@ typedef struct Segment {
     void addPixelColorXY(int x, int y, byte r, byte g, byte b, byte w = 0, bool fast = false) { addPixelColor(x, RGBW32(r,g,b,w), fast); }
     void addPixelColorXY(int x, int y, CRGB c, bool fast = false)          { addPixelColor(x, RGBW32(c.r,c.g,c.b,0), fast); }
     void fadePixelColorXY(uint16_t x, uint16_t y, uint8_t fade)            { fadePixelColor(x, fade); }
-    void box_blur(uint16_t i, bool vertical, fract8 blur_amount) {}
+    void boxBlur(uint16_t i, bool vertical, fract8 blur_amount) {}
     void blurRow(uint16_t row, fract8 blur_amount) {}
     void blurCol(uint16_t col, fract8 blur_amount) {}
     void moveX(int8_t delta, bool wrap = false) {}
     void moveY(int8_t delta, bool wrap = false) {}
     void move(uint8_t dir, uint8_t delta, bool wrap = false) {}
-    void fill_circle(uint16_t cx, uint16_t cy, uint8_t radius, CRGB c) {}
+    void fillCircle(uint16_t cx, uint16_t cy, uint8_t radius, CRGB c) {}
     void drawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint32_t c) {}
     void drawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, CRGB c) {}
     void drawCharacter(unsigned char chr, int16_t x, int16_t y, uint8_t w, uint8_t h, uint32_t color, uint32_t = 0, int8_t = 0) {}
     void drawCharacter(unsigned char chr, int16_t x, int16_t y, uint8_t w, uint8_t h, CRGB color) {}
     void drawCharacter(unsigned char chr, int16_t x, int16_t y, uint8_t w, uint8_t h, CRGB c, CRGB c2, int8_t rotate = 0) {}
-    void wu_pixel(uint32_t x, uint32_t y, CRGB c) {}
+    void wuPixel(uint32_t x, uint32_t y, CRGB c) {}
   #endif
 } segment;
 //static int segSize = sizeof(Segment);
